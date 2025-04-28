@@ -28,6 +28,7 @@ class AuthRemoteDatasource {
   }
 
   Future<Either<String, String>> logout() async {
+    AuthLocalDatasource().removeAuthData();
     final authData = await AuthLocalDatasource().getAuthData();
     final response = await http.post(
       Uri.parse('http://192.168.31.89:8000/api/logout'),

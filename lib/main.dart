@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:training/data/dataresource/auth_local_datasource.dart';
 import 'package:training/data/dataresource/auth_remote_datasource.dart';
 import 'package:training/presentation/auth/blocs/login/login_bloc.dart';
 import 'package:training/presentation/auth/blocs/logout/bloc/logout_bloc.dart';
+import 'package:training/presentation/home/pages/home_page.dart';
 import 'presentation/auth/pages/splash_page.dart';
 
 void main() {
@@ -34,7 +36,15 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           fontFamily: GoogleFonts.plusJakartaSans().fontFamily,
         ),
-        home: const SplashPage(),
+        home: FutureBuilder(
+            future: AuthLocalDatasource().isAuthData(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData && snapshot.data == true) {
+                return const HomePage();
+              } 
+                return const SplashPage();
+              
+            }),
       ),
     );
   }
