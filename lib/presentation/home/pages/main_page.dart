@@ -17,7 +17,6 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
   final _widgets = [
-    // const HomePage(),
     const HomePage(),
     const HistoryPage(),
     const SettingPage(),

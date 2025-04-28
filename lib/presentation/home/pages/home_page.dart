@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:training/core/components/custom_button.dart';
 import 'package:training/core/extensions/date_ext.dart';
+import 'package:training/presentation/home/pages/profile_page.dart';
 
 import '../../../core/assets/assets.gen.dart';
 import '../../../core/components/custom_sized_box.dart';
 import '../../../core/constants/colors.dart';
 import '../widgets/menu_button.dart';
-
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -30,13 +30,22 @@ class HomePage extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(50.0),
-                    child: Image.network(
-                      'https://static.independent.co.uk/2024/03/20/06/19110627-21c78610-f16a-4da1-9401-3fa84a7e6646.jpg',
-                      width: 65.0,
-                      height: 65.0,
-                      fit: BoxFit.cover,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ProfilePage()),
+                      );
+                    },
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(50.0),
+                      child: Image.network(
+                        'https://tmssl.akamaized.net/images/foto/galerie/ronaldo-cristiano-2017-real-madrid-ballon-d-or-2016-0026751808hjpg-1698686328-120749.jpg',
+                        width: 65.0,
+                        height: 65.0,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                   const SpaceWidth(12.0),

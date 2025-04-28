@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:training/data/dataresource/auth_local_datasource.dart';
 import 'package:training/presentation/auth/blocs/login/login_bloc.dart';
 import 'package:training/presentation/home/pages/home_page.dart';
 import '../../../core/core.dart';
@@ -82,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             const SpaceHeight(90),
             CustomButtonTraining(
-              bgColor: AppColors.blue,
+              bgColor: const Color.fromARGB(255, 86, 144, 252),
               title: 'Face ID',
               preFixIcon: Assets.icons.attendance.svg(width: 50),
               onPressed: () {
@@ -90,9 +91,10 @@ class _LoginPageState extends State<LoginPage> {
               },
             ),
             const SpaceHeight(30),
-          BlocListener<LoginBloc, LoginState>(
+            BlocListener<LoginBloc, LoginState>(
               listener: (context, state) {
                 if (state is LoginSuccess) {
+                  AuthLocalDatasource().saveAuthData(state.authResponseModel);
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
@@ -101,16 +103,21 @@ class _LoginPageState extends State<LoginPage> {
                   );
                 }
                 if (state is LoginFailure) {
-                  final errorMesage = jsonDecode(state.message) ['message'];
+                  final errorMesage = jsonDecode(state.message)['message'];
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Center(child: Text(errorMesage))),
+                        backgroundColor: Colors.redAccent,
+                        content: Center(
+                            child: Text(
+                          errorMesage,
+                          style: TextStyle(fontWeight: FontWeight.w900),
+                        ))),
                   );
                 }
               },
               child: BlocBuilder<LoginBloc, LoginState>(
                 builder: (context, state) {
-                  if(state is LoginLoading){
+                  if (state is LoginLoading) {
                     return const CircularProgressIndicator();
                   }
                   return CustomButton.filled(
